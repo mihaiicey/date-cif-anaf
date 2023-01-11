@@ -17,9 +17,8 @@ function company_data( WP_REST_Request $request ) {
     static $lastRequest;
     $maxRequestsPerMin = 20;
     if (isset($lastRequest)) {
-        $delay = 60 / $maxRequestsPerMin; // 60 seconds / $maxRequestsPerMin
+        $delay = 10 / $maxRequestsPerMin;
         if ((microtime(true) - $lastRequest) < $delay) {
-            // Sleep until the delay is reached
             $sleepAmount = ($delay - microtime(true) + $lastRequest) * (1000 ** 2);
             usleep($sleepAmount);
         }

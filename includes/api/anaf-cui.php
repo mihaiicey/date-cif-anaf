@@ -67,13 +67,12 @@ function company_data( WP_REST_Request $request ) {
 }
 function enqueue_scripts_anaf() {
     if (is_checkout()) {
-        $url = plugins_url('/date-cif-anaf');
         $args = [
             'rest_api_url' => get_rest_url(null, 'anaf/'),
             'homepage' => home_url(),
             'nonce' => wp_create_nonce('wp_rest'),
         ];
-        wp_register_script('send-cif-form', $url . '/public/js/date-cif-anaf-public.js', [], '1.0.0', true);
+        wp_register_script('send-cif-form', plugin_dir_url( __FILE__ ) . '../../public/js/date-cif-anaf-public.js', [], '1.0.0', true);
         wp_localize_script('send-cif-form', 'anafcui_object', $args);
         wp_enqueue_script('send-cif-form');
 

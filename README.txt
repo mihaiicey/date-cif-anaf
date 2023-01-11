@@ -9,7 +9,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Plugin ce descarca automat datele de identificare a companiilor pe baza la cif la finalizarea comenzii, din baza de date de la anaf. Acest plugin functioneaza obligatoriu cu: Facturare - Persoana Fizica sau Juridica by GEORGE CIOBAU
 
 == Description ==
-!! ATENTIE !! - Functioneaza cu modulul:
+!! ATENTIE !! - Functioneaza cu modulul: https://wordpress.org/plugins/facturare-persoana-fizica-sau-juridica/ 
 
 !! VA URMA !! - Setari in partea de admin pentru configurarea field-urilor pers fizica / pers juridica in functie de modulul pe care il ai configurat (smartbill sau "facturare - persoana fizica sau juridica")
 

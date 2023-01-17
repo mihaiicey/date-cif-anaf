@@ -2,3 +2,11 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.campPfPj{
+    margin-top: 3rem;
+}
+@media screen and (max-width: 980px){
+    .selectareModul{
+        width:20rem;
+    }
+}

@@ -123,8 +123,10 @@ class Date_Cif_Anaf {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-date-cif-anaf-public.php';
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/api/anaf-cui.php';
+
 		$this->loader = new Date_Cif_Anaf_Loader();
 
+//        $this->loader = new Settings();
 	}
 
 	/**
@@ -157,8 +159,9 @@ class Date_Cif_Anaf {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+//        $this->loader->add_action('admin_menu', array( $plugin_admin, 'settingsDateAnaf' ), 9);
 
-	}
+    }
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -183,7 +186,9 @@ class Date_Cif_Anaf {
 	 */
 	public function run() {
 		$this->loader->run();
-	}
+
+
+    }
 
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of

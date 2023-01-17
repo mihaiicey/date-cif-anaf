@@ -40,7 +40,8 @@ class Date_Cif_Anaf_Admin {
 	 */
 	private $version;
 
-	/**
+
+    /**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -52,7 +53,7 @@ class Date_Cif_Anaf_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
         add_action('admin_menu', array($this, 'dateCifAnafSettings'), 9);
-        add_action( 'admin_init', array( $this, 'create_settings_form_data' ) );
+        add_action( 'admin_init', array( $this, 'create_settings_form_data_init' ) );
     }
 
 	/**
@@ -61,18 +62,6 @@ class Date_Cif_Anaf_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Date_Cif_Anaf_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Date_Cif_Anaf_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/date-cif-anaf-admin.css', array(), $this->version, 'all' );
 
@@ -84,19 +73,6 @@ class Date_Cif_Anaf_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Date_Cif_Anaf_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Date_Cif_Anaf_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/date-cif-anaf-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -113,76 +89,67 @@ class Date_Cif_Anaf_Admin {
     public function displayAdminDashboard() {
         require_once 'partials/date-cif-anaf-admin-display.php';
     }
-    
-    public function create_settings_form_data(){
-        register_setting(
-            'date_cif_anaf_options',
-            'date_cif_anaf_name',
-            array( $this, 'sanitize' )
+
+    public function create_settings_form_data_init(){
+        add_settings_section(
+            // ID used to identify this section and with which to register options
+            'settings_page_general_section',
+            '',
+            array( $this, 'print_section_info' ),
+            // Page on which to add this section of options
+            'date-cif-anaf-settings'
         );
 
-        add_settings_section(
-            'setting_section_id',
-            __( 'Modulul de Facturare', 'date-cif-anaf' ),
-            array( $this, 'print_section_info' ),
-            'date_cif_anaf_general_settings'
-        );
-        
         add_settings_field(
-            'selected_module_pfPj',
-            __( 'Modul', 'date-cif-anaf' ),
+            'selectie_modul_pfjs',
+            __( 'Modulul de Facturare', 'date-cif-anaf' ),
             array( $this, 'display_select_invoice_field' ),
-            'date_cif_anaf_general_settings',
+            'date-cif-anaf-settings',
+            'settings_page_general_section',
+        );
+
+        register_setting(
             'date_cif_anaf_options',
+            'selectie_modul_pfjs',
             array(
-                'options' => array(
-                    'facturarepfpj' => 'Facturare Pers Fizica / Jurdica',
-                    'smartbill' => 'Smart Bill',
-                    'fgo' => 'Fgo.ro',
-                    'curiero' => 'Curie.ro'
-                ),
-                'selected' => get_option( 'selected_module_pfPj' ),
+                'sanitize_callback' => array( $this, 'sanitize')
             )
         );
 
     }
-    /**
-     * Sanitize each setting field as needed
-     *
-     * @param array $input Contains all settings fields as array keys
-     */
-    public function sanitize( $input ){
-        $new_input = array();
-        $allowed_options = array( 'facturarepfpj', 'smartbill', 'fgo', 'curiero' );
 
-        if( isset( $input['id_modul'] ) )
-            $new_input['title'] = sanitize_text_field( $input['id_modul'] );
-
-        if( isset( $input['selected_module_pfPj'] ) )
-            if ( ! in_array( $input['selected_module_pfPj'], $allowed_options, true ) ) {
-                return 'option1';
-            }
-
-        return $new_input;
-    }
-
-    /**
-     * Print the Title Section
-     */
-    public function print_section_info(){
+    public function print_section_info() {
         _e( 'Aici setezi modulul care îți creează câmpurile pentru facturarea Persoanei Fizice sau Juridice.', 'date-cif-anaf' );
     }
 
-    /**
-     * Get the plugins list option array and create a select list
-     */
-    public function display_select_invoice_field( $args ){
-        $options = $args['options'];
-        $selected = $args['selected'];
-        printf( '<select id="selected_module_pfPj" name="selected_module_pfPj">' );
-        foreach ( $options as $value => $label ) {
-            printf( '<option value="%s" %s>%s</option>', $value, selected( $selected, $value, false ), $label );
+    public function display_select_invoice_field(){
+        ?>
+        <select name="selectie_modul_pfjs">
+            <option value="0"><?php esc_attr_e( 'Selecteaza un modul', 'date-cif-anaf' ); ?></option>
+            <option value="facturarepfpj" <?php selected( get_option( 'selectie_modul_pfjs' ), 'facturarepfpj' ); ?>> Facturare Pers Fizica / Jurdica de  George Ciobanu </option>
+            <option value="smartbill" <?php selected( get_option( 'selectie_modul_pfjs' ), 'smartbill' ); ?>> Smart Bill </option>
+            <option value="fgo" <?php selected( get_option( 'selectie_modul_pfjs' ), 'fgo' ); ?>> Fgo.ro </option>
+            <option value="curiero" <?php selected( get_option( 'selectie_modul_pfjs' ), 'curiero' ); ?>> Curie.ro </option>
+        </select>
+        <?php
+    }
+
+    public function sanitize( $input ) {
+        $allowed_options =  array(
+            'facturarepfpj',
+            'smartbill',
+            'fgo',
+            'curiero'
+        );
+        if ( false ===  in_array( $input, $allowed_options, true ) ) {
+            add_settings_error(
+                'selectie_modul_pfjs',
+                'invalid_selection',
+                esc_html__( 'Camp invalid sau nu ai selectat un modul', 'cliowp-settings-page' ),
+            );
+            return get_option('selectie_modul_pfjs');
         }
-        printf( '</select>' );
+        return $input;
+
     }
 }

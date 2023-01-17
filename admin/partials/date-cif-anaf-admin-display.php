@@ -15,17 +15,18 @@
 
 <div class="wrap">
     <div id="icon-themes" class="icon32"></div>
+    <?php
+    $options = get_option( 'selectie_modul_pfjs' );
+    print_r($options)
+    ?>
     <h2>Setari Date CUI Anaf</h2>
     <!--NEED THE settings_errors below so that the errors/success messages are shown after submission - wasn't working once we started using add_menu_page and stopped using add_options_page so needed this-->
     <?php settings_errors(); ?>
-    testing value saved: <?=esc_attr( get_option('date_cif_anaf_options') ); ?>
 
     <form method="POST" action="options.php" class="campPfPj">
         <?php
-        register_setting(
-            'date_cif_anaf_options','selected_module_pfPj_array' );
         settings_fields( 'date_cif_anaf_options' );
-        do_settings_sections( 'date_cif_anaf_general_settings' );
+        do_settings_sections( 'date-cif-anaf-settings' );
         ?>
         <?php submit_button(); ?>
     </form>

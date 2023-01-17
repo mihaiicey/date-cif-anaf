@@ -22,6 +22,8 @@
 
     <form method="POST" action="options.php" class="campPfPj">
         <?php
+        register_setting(
+            'date_cif_anaf_options','selected_module_pfPj_array' );
         settings_fields( 'date_cif_anaf_options' );
         do_settings_sections( 'date_cif_anaf_general_settings' );
         ?>

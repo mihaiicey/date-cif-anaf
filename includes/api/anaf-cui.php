@@ -29,7 +29,7 @@ function company_data( WP_REST_Request $request ) {
     $data = date("Y-m-d");
     $curl = curl_init();
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://webservicesp.anaf.ro/PlatitorTvaRest/api/v7/ws/tva',
+        CURLOPT_URL => 'https://webservicesp.anaf.ro/PlatitorTvaRest/api/v8/ws/tva',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,

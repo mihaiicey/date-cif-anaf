@@ -1,3 +1,6 @@
+ATENTIE MODULUL NU A FOST ACTUALIZAT !
+REVIN CU ACTUALIZAR
+
 === Descarcare date firma anaf ===
 Donate link: https://icey.dev
 Requires at least: 3.0.1

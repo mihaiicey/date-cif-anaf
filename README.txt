@@ -1,6 +1,4 @@
-ATENTIE MODULUL NU A FOST ACTUALIZAT !
-REVIN CU ACTUALIZAR
-
+INFO. a fost actualizata versiunea API ANAF la v8
 === Descarcare date firma anaf ===
 Donate link: https://icey.dev
 Requires at least: 3.0.1
